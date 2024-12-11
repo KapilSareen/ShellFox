@@ -130,12 +130,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.resetSpinner()
 			return m, tea.Batch(m.spinner.Tick, fetchData(v))
 
-		case "ctrl+l":
-			m.index = rand.Intn(len(LoadingMsgs))
-			isLoading = !isLoading
-			m.resetSpinner()
-			return m, m.spinner.Tick
-
 		case "ctrl+f":
 			m.fullscreen = !m.fullscreen
 			if m.fullscreen {
