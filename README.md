@@ -17,16 +17,26 @@ This project is not focused on being the fastest or feature-rich browser; instea
 - [x] **Loading animations** with dynamic messages.
 - [x] **Initial URL fetching functionality**.
 
-### Ongoing Work 🚧
+### To-do 🚧
 - [ ] **HTML Parsing**
-  - [ ] Start with text-only extraction.
-  - [ ] Extend to structured parsing.
+  - [x] Parse the page and create the basic DOM tree with Text and Element nodes.
+  - [ ] Extend Support for other nodes.
+  - [ ] Extend Support for self closing tags
 - [ ] **CSS Parsing**
   - [ ] Implement a simple parser for inline styles.
   - [ ] Add support for external stylesheets.
   - [ ] Enable terminal-friendly formatting.
+- [ ] **Render Tree Creation**
+  - [ ] Combine DOM and CSSOM to create the Render Tree.
+  - [ ] Ensure only visible elements are included in the Render Tree.
+- [ ] **Layout (Reflow)**
+  - [ ] Calculate the position and size of each element in the Render Tree.
+  - [ ] Implement rules for layout (e.g., width, height, margins, padding, positioning).
+- [ ] **Painting**
+  - [ ] Paint each element with proper styles (e.g., text, images, borders).
+  - [ ] Handle complex layers and z-index.
 
-### Upcoming Features 📝
+### Ambitious Goals 📝
 - [ ] **JS Support**
   - [ ] Implement a basic JavaScript execution engine.
 - [ ] **Accessibility Features**
@@ -36,13 +46,6 @@ This project is not focused on being the fastest or feature-rich browser; instea
 - [ ] **Improved Error Handling**
   - [ ] Provide detailed error messages.
   - [ ] Offer recovery options for failed requests.
-
-### Long-Term Vision 🌟
-- [ ] **Bookmarks Support** — Store and retrieve user-favored URLs for quick access.
-- [ ] **Session Management** — Allow users to save and resume sessions.
-- [ ] **Search Functionality** — Support for searching within fetched pages.
-- [ ] **Themes** — Integrate dark and light themes for the interface.
-- [ ] **Unit Tests** — Add unit tests for key functionalities to ensure code reliability and robustness.
 
 ---
 
