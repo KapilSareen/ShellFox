@@ -134,7 +134,12 @@ func (p *Parser) ParseNodes() []*Node {
 	return nodes
 }
 
-func Parse(html string) *Node {
+func Parse(html string) *Node { // need to be improved
+	// Extract text between <body></body>
+	html = extractBody(html)
+	// Remove script tags
+	html = RemoveScriptTags(html)
+	// Parse the html
 	parser := &Parser{input: html, position: 0}
 	nodes := parser.ParseNodes()
 	if len(nodes) == 1 {
@@ -145,4 +150,36 @@ func Parse(html string) *Node {
 
 func NewParser(html string) *Parser {
 	return &Parser{input: html, position: 0}
+}
+
+// Extracts the body content from the html - not fully functional
+func extractBody(html string) string {
+	start := "<body"
+	end := "</body>"
+	bodyContent := ""
+	bodyStart := strings.Index(html, start)
+	bodyEnd := strings.Index(html, end)
+	if bodyStart != -1 && bodyEnd != -1 {
+		bodyContent = html[bodyStart+len(start) : bodyEnd]
+		return bodyContent
+	} else {
+		return "Body tags not found"
+	}
+}
+
+// faulthy implementation
+func RemoveScriptTags(html string) string {
+	for {
+		start := strings.Index(html, "<script")
+		if start == -1 {
+			break
+		}
+		end := strings.Index(html[start:], "</script>")
+		if end == -1 {
+			break
+		}
+		end += start + len("</script>")
+		html = html[:start] + html[end:]
+	}
+	return html
 }

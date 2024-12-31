@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"strings"
-
+	"github.com/KapilSareen/ShellFox/pkg/parse"
 	"github.com/KapilSareen/ShellFox/pkg/fetch"
 	"github.com/charmbracelet/bubbles/cursor"
 	"github.com/charmbracelet/bubbles/spinner"
@@ -68,7 +68,7 @@ func InitialModel() model {
 ta.FocusedStyle.CursorLine = lipgloss.NewStyle()
 	ta.ShowLineNumbers = false
 
-	vp := viewport.New(50, 14)
+	vp := viewport.New(50, 15)
 	vp.SetContent(lipgloss.NewStyle().
 		Align(lipgloss.Center).
 		Foreground(lipgloss.Color("231")).
@@ -84,7 +84,6 @@ ta.FocusedStyle.CursorLine = lipgloss.NewStyle()
 
 		Welcome to Shell-Fox!
 		A CLI-based browser for maniacs
-
 `))
 	ta.KeyMap.InsertNewline.SetEnabled(false)
 
@@ -149,7 +148,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.messages = []string{string(msg)}
 		m.viewport.SetContent(strings.Join(m.messages, "\n"))
 		m.textarea.Reset()
-		m.viewport.Height = 14
+		m.viewport.Height = countNewlines(string(msg)) + 1
 		m.viewport.GotoBottom()
 		return m, nil
 
@@ -173,7 +172,10 @@ type fetchResponseMsg string
 func fetchData(url string) tea.Cmd {
 	return func() tea.Msg {
 		response := fetch.Fetch(url)
-		return fetchResponseMsg(response)
+		node := parse.Parse(response)
+		// Print the node tree
+		DOM:=node.DOMString("")
+		return fetchResponseMsg(DOM)
 	}
 }
 
@@ -197,4 +199,8 @@ func (m *model) resetSpinner() {
 	m.spinner = spinner.New()
 	m.spinner.Style = spinnerStyle
 	m.spinner.Spinner = spinners[m.index]
+}
+
+func countNewlines(content string) int {
+	return strings.Count(content, "\n")
 }

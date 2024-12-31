@@ -23,9 +23,8 @@ This project is not focused on being the fastest or feature-rich browser; instea
   - [ ] Extend Support for other nodes.
   - [ ] Extend Support for self closing tags
 - [ ] **CSS Parsing**
-  - [ ] Implement a simple parser for inline styles.
+  - [x] Implement a simple parser for inline styles. (Specificity pending)
   - [ ] Add support for external stylesheets.
-  - [ ] Enable terminal-friendly formatting.
 - [ ] **Render Tree Creation**
   - [ ] Combine DOM and CSSOM to create the Render Tree.
   - [ ] Ensure only visible elements are included in the Render Tree.

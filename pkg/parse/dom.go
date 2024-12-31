@@ -37,26 +37,27 @@ func Element(tagName string, attr map[string]string, children ...*Node) *Node {
 }
 
 
-func (n *Node) PrintDOM(indent string) {
+func (n *Node) DOMString(indent string) string {
+    var result string
     switch nodeType := n.NodeType.(type) {
     case TextNode:
-        fmt.Printf("%s%s\n", indent, nodeType.Text)
+        result += fmt.Sprintf("%s%s\n", indent, nodeType.Text)
     case ElementNode:
-        fmt.Printf("%s<%s", indent, nodeType.Data.TagName)
+        result += fmt.Sprintf("%s<%s", indent, nodeType.Data.TagName)
         if len(nodeType.Data.Attr) > 0 {
             for key, value := range nodeType.Data.Attr {
-                fmt.Printf(" %s=\"%s\"", key, value)
+                result += fmt.Sprintf(" %s=\"%s\"", key, value)
             }
         }
         if len(n.Children) > 0 {
-            fmt.Println(">")
+            result += ">\n"
             for _, child := range n.Children {
-                child.PrintDOM(indent + "│  ")
+                result += child.DOMString(indent + "│  ")
             }
-            fmt.Printf("%s└</%s>\n", indent, nodeType.Data.TagName)
+            result += fmt.Sprintf("%s└</%s>\n", indent, nodeType.Data.TagName)
         } else {
-            fmt.Println(" />")
+            result += " />\n"
         }
     }
+    return result
 }
-
